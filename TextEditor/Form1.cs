@@ -103,6 +103,7 @@ namespace TextEditor
         private void TabControl1SelectedIndexChanged(object sender, EventArgs e)
         {
             currectInd = tabControl1.SelectedIndex;
+            Text = tabControl1.SelectedTab.Text + " - Notepad+";
         }
     }
 
