@@ -104,6 +104,7 @@ namespace TextEditor
         {
             currectInd = tabControl1.SelectedIndex;
             Text = tabControl1.SelectedTab.Text + " - Notepad+";
+
         }
     }
 
