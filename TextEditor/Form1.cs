@@ -14,13 +14,14 @@ namespace TextEditor
     public partial class Form1 : Form
     {
         private static Bitmap closeImage = new Bitmap(@"C:\programs\Editor\TextEditor\Resources\Close.png");
+        private static int currectInd = 0;
         public Form1()
         {
             InitializeComponent();
             MinimumSize = new Size(420, 360);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1Load(object sender, EventArgs e)
         {
             tabControl1.Padding = new Point(12, 4);
             tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
@@ -43,20 +44,25 @@ namespace TextEditor
             newPage.Padding = new Padding(3, 3, 3, 3);
             tabControl1.TabPages.Add(newPage);
             tabControl1.SelectedIndex = tabControl1.TabCount - 1;
-            RichTextBox newBox = new RichTextBox();
-            newPage.Controls.Add(newBox);
-            newBox.Dock = DockStyle.Fill;
-            newBox.BorderStyle = BorderStyle.FixedSingle;
-            newBox.Margin = new Padding(3, 3, 3, 3);
+            newPage.Controls.Add(Roflan.CreateNewRichTextBox());
+            Text = newPage.Text + " - Notepad+";
 
         }
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            //    richTextBox1.Text = File.ReadAllText(openFileDialog1.FileName);
-            var tabPage = tabControl1.TabPages[0];
-            tabPage.Text = "123434343434343433333333333333333333333333333333333";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var newBox = Roflan.CreateNewRichTextBox();
+                newBox.Text = File.ReadAllText(openFileDialog1.FileName);
+                tabControl1.TabPages[currectInd].Controls.Clear();
+                tabControl1.SelectedTab.Controls.Add(newBox);
+                tabControl1.SelectedTab.Text = openFileDialog1.FileName.Split('\\')[openFileDialog1.FileName.Split('\\').Length - 1];
+
+            }
+
+            //var tabPage = tabControl1.TabPages[0];
+            //tabPage.Text = "123434343434343433333333333333333333333333333333333";
         }
 
         private void TabControl1DrawItem(object sender, DrawItemEventArgs e)
@@ -91,6 +97,11 @@ namespace TextEditor
                     break;
                 }
             }
+        }
+
+        private void TabControl1SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currectInd = tabControl1.SelectedIndex;
         }
     }
 
