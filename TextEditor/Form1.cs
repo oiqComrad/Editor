@@ -58,6 +58,7 @@ namespace TextEditor
                 tabControl1.TabPages[currectInd].Controls.Clear();
                 tabControl1.SelectedTab.Controls.Add(newBox);
                 tabControl1.SelectedTab.Text = openFileDialog1.FileName.Split('\\')[openFileDialog1.FileName.Split('\\').Length - 1];
+                Text = openFileDialog1.FileName + " - Notepad+";
 
             }
 
