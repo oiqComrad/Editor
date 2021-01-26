@@ -14,7 +14,9 @@ namespace TextEditor
     public partial class Form1 : Form
     {
         private static Bitmap closeImage = new Bitmap(@"C:\programs\Editor\TextEditor\Resources\Close.png");
-        private static int currectInd = 0;
+        private static int currentInd = 0;
+        private static RichTextBox currentRtb;
+        private static string currentText = "";
         public Form1()
         {
             InitializeComponent();
@@ -25,6 +27,7 @@ namespace TextEditor
         {
             tabControl1.Padding = new Point(12, 4);
             tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
+            currentRtb = rtb;
         }
         private void tabPage1_Click(object sender, EventArgs e)
         {
@@ -43,9 +46,10 @@ namespace TextEditor
             newPage.Margin = new Padding(3, 3, 3, 3);
             newPage.Padding = new Padding(3, 3, 3, 3);
             tabControl1.TabPages.Add(newPage);
+            newPage.Controls.Add(CreateNewRichTextBox());
             tabControl1.SelectedIndex = tabControl1.TabCount - 1;
-            newPage.Controls.Add(Roflan.CreateNewRichTextBox());
             Text = newPage.Text + " - Notepad+";
+            currentRtb = (RichTextBox)tabControl1.SelectedTab.Controls["rtb"];
 
         }
 
@@ -53,17 +57,11 @@ namespace TextEditor
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var newBox = Roflan.CreateNewRichTextBox();
-                newBox.Text = File.ReadAllText(openFileDialog1.FileName);
-                tabControl1.TabPages[currectInd].Controls.Clear();
-                tabControl1.SelectedTab.Controls.Add(newBox);
+                currentRtb.Text = File.ReadAllText(openFileDialog1.FileName);
                 tabControl1.SelectedTab.Text = openFileDialog1.FileName.Split('\\')[openFileDialog1.FileName.Split('\\').Length - 1];
                 Text = openFileDialog1.FileName + " - Notepad+";
-
             }
 
-            //var tabPage = tabControl1.TabPages[0];
-            //tabPage.Text = "123434343434343433333333333333333333333333333333333";
         }
 
         private void TabControl1DrawItem(object sender, DrawItemEventArgs e)
@@ -102,9 +100,30 @@ namespace TextEditor
 
         private void TabControl1SelectedIndexChanged(object sender, EventArgs e)
         {
-            currectInd = tabControl1.SelectedIndex;
+            currentRtb = (RichTextBox)tabControl1.SelectedTab.Controls["rtb"];
+            currentInd = tabControl1.SelectedIndex;
             Text = tabControl1.SelectedTab.Text + " - Notepad+";
+            currentText = currentRtb.Text;
 
+        }
+
+        private void RtbTextChanged(object sender, EventArgs e)
+        {
+            if (currentRtb.Text != currentText && !tabControl1.SelectedTab.Text.Contains("*"))
+                tabControl1.SelectedTab.Text += "*";
+            if (currentText == currentRtb.Text && tabControl1.SelectedTab.Text.Contains("*"))
+                tabControl1.SelectedTab.Text = tabControl1.SelectedTab.Text.Substring(0, tabControl1.SelectedTab.Text.Length - 1);
+        }
+
+        private RichTextBox CreateNewRichTextBox()
+        {
+            RichTextBox newBox = new RichTextBox();
+            newBox.Dock = DockStyle.Fill;
+            newBox.BorderStyle = BorderStyle.FixedSingle;
+            newBox.Margin = new Padding(3, 3, 3, 3);
+            newBox.Name = "rtb";
+            newBox.TextChanged += RtbTextChanged;
+            return newBox;
         }
     }
 
