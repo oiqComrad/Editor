@@ -12,7 +12,7 @@ namespace TextEditor
 {
     class Roflan
     {
-        public static Print()
+        public static void Print()
         {
             Console.WriteLine("dddd");
         }
