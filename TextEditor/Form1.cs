@@ -128,7 +128,12 @@ namespace TextEditor
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
+            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|rtf files (*.rtf)|*.rtf";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
 
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                File.WriteAllText(saveFileDialog1.FileName, currentRtb.Text);
         }
     }
 
