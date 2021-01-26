@@ -125,6 +125,11 @@ namespace TextEditor
             newBox.TextChanged += RtbTextChanged;
             return newBox;
         }
+
+        private void SaveToolStripMenuItemClick(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
