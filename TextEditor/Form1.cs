@@ -207,6 +207,32 @@ namespace TextEditor
                 }
             }
         }
+
+        private void FifteenSecToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            timer1.Interval = 15000;
+        }
+
+
+        private void FourtySecToolStripMenuItem2Click(object sender, EventArgs e)
+        {
+            timer1.Interval = 45000;
+        }
+
+        private void MinToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            timer1.Interval = 60000;
+        }
+
+        private void FiveMinToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            timer1.Interval = 300000;
+        }
+
+        private void Timer1Tick(object sender, EventArgs e)
+        {
+            SaveAllToolStripMenuItemClick(sender, e);
+        }
     }
 
 
