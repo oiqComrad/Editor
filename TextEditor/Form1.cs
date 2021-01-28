@@ -46,8 +46,8 @@ namespace TextEditor
         private void NewToolStripMenuItemClick(object sender, EventArgs e)
         {
             TabPage newPage = new TabPage("new" + tabControl1.TabCount.ToString());
-            newPage.Margin = new Padding(3, 3, 3, 3);
-            newPage.Padding = new Padding(3, 3, 3, 3);
+            newPage.Margin = new Padding(0, 0, 0, 0);
+            newPage.Padding = new Padding(0, 0, 0, 0);
             tabControl1.TabPages.Add(newPage);
             newPage.Controls.Add(CreateNewRichTextBox());
             tabControl1.SelectedIndex = tabControl1.TabCount - 1;
@@ -139,7 +139,9 @@ namespace TextEditor
         private void RtbTextChanged(object sender, EventArgs e)
         {
             if (!tabControl1.SelectedTab.Text.Contains("*"))
-            tabControl1.SelectedTab.Text += "*";
+                tabControl1.SelectedTab.Text += "*";
+            length.Text = "Length: " + currentRtb.Text.Length.ToString();
+            lines.Text =  "Lines: " + currentRtb.Text.Count(c => c == '\n').ToString();
         }
 
         private RichTextBox CreateNewRichTextBox()
@@ -203,7 +205,8 @@ namespace TextEditor
                 if (tempBox != null)
                 {
                     File.WriteAllText(page.Name, tempBox.Text);
-                    page.Text = page.Text.Substring(0, page.Text.Length - 1);
+                    if (page.Text.Contains("*"))
+                        page.Text = page.Text.Substring(0, page.Text.Length - 1);
                 }
             }
         }
@@ -233,6 +236,8 @@ namespace TextEditor
         {
             SaveAllToolStripMenuItemClick(sender, e);
         }
+
+      
     }
 
 

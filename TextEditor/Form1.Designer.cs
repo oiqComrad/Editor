@@ -50,9 +50,12 @@ namespace TextEditor
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.rtb = new System.Windows.Forms.RichTextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +65,6 @@ namespace TextEditor
             this.сохранатьВсеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.форматToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,15 +74,18 @@ namespace TextEditor
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.минутаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.минутToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.rtb = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.fileType = new System.Windows.Forms.Label();
+            this.length = new System.Windows.Forms.Label();
+            this.lines = new System.Windows.Forms.Label();
+            this.encoding = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // undoToolStripMenuItem
@@ -205,14 +210,23 @@ namespace TextEditor
             this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem4.Text = "toolStripMenuItem4";
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabControl1.Location = new System.Drawing.Point(0, 24);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 23);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(686, 348);
+            this.tabControl1.Size = new System.Drawing.Size(893, 435);
             this.tabControl1.TabIndex = 2;
             this.tabControl1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl1DrawItem);
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1SelectedIndexChanged);
@@ -224,23 +238,30 @@ namespace TextEditor
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(678, 322);
+            this.tabPage1.Size = new System.Drawing.Size(885, 409);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "README.txt";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
-            // rtb
+            // menuStrip1
             // 
-            this.rtb.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtb.Location = new System.Drawing.Point(3, 3);
-            this.rtb.Name = "rtb";
-            this.rtb.Size = new System.Drawing.Size(672, 316);
-            this.rtb.TabIndex = 0;
-            this.rtb.Text = "";
-            this.rtb.WordWrap = false;
-            this.rtb.TextChanged += new System.EventHandler(this.RtbTextChanged);
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.правкаToolStripMenuItem,
+            this.форматToolStripMenuItem,
+            this.настройкиToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.MdiWindowListItem = this.fileToolStripMenuItem;
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.menuStrip1.Size = new System.Drawing.Size(893, 23);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -256,9 +277,8 @@ namespace TextEditor
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(52, 22);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(52, 21);
             this.fileToolStripMenuItem.Text = "&Файл";
-            this.fileToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // newToolStripMenuItem
             // 
@@ -325,36 +345,18 @@ namespace TextEditor
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.exitToolStripMenuItem.Text = "&Выход";
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 0);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.правкаToolStripMenuItem,
-            this.форматToolStripMenuItem,
-            this.настройкиToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.MdiWindowListItem = this.fileToolStripMenuItem;
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.menuStrip1.Size = new System.Drawing.Size(686, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
-            // 
             // правкаToolStripMenuItem
             // 
             this.правкаToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
-            this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 22);
+            this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
             this.правкаToolStripMenuItem.Text = "&Правка";
             // 
             // форматToolStripMenuItem
             // 
             this.форматToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.форматToolStripMenuItem.Name = "форматToolStripMenuItem";
-            this.форматToolStripMenuItem.Size = new System.Drawing.Size(62, 22);
+            this.форматToolStripMenuItem.Size = new System.Drawing.Size(62, 21);
             this.форматToolStripMenuItem.Text = "&Формат";
             // 
             // настройкиToolStripMenuItem
@@ -363,7 +365,7 @@ namespace TextEditor
             this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.автосохранениеToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 22);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 21);
             this.настройкиToolStripMenuItem.Text = "&Настройки";
             // 
             // автосохранениеToolStripMenuItem
@@ -375,7 +377,7 @@ namespace TextEditor
             this.минутаToolStripMenuItem,
             this.минутToolStripMenuItem});
             this.автосохранениеToolStripMenuItem.Name = "автосохранениеToolStripMenuItem";
-            this.автосохранениеToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.автосохранениеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.автосохранениеToolStripMenuItem.Text = "Автосохранение";
             // 
             // секундToolStripMenuItem
@@ -411,49 +413,108 @@ namespace TextEditor
             this.минутToolStripMenuItem.Text = "5 минут";
             this.минутToolStripMenuItem.Click += new System.EventHandler(this.FiveMinToolStripMenuItemClick);
             // 
-            // openFileDialog1
+            // rtb
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
+            this.rtb.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtb.Location = new System.Drawing.Point(3, 3);
+            this.rtb.Name = "rtb";
+            this.rtb.Size = new System.Drawing.Size(879, 403);
+            this.rtb.TabIndex = 0;
+            this.rtb.Text = "";
+            this.rtb.WordWrap = false;
+            this.rtb.TextChanged += new System.EventHandler(this.RtbTextChanged);
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.LightGray;
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 253F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 368);
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.menuStrip1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(686, 22);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(893, 478);
+            this.tableLayoutPanel1.TabIndex = 3;
             // 
-            // label1
+            // tableLayoutPanel2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label1.Location = new System.Drawing.Point(318, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(247, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.76494F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.34615F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.23586F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.65305F));
+            this.tableLayoutPanel2.Controls.Add(this.fileType, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.length, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lines, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.encoding, 3, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 458);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(893, 20);
+            this.tableLayoutPanel2.TabIndex = 3;
+            // 
+            // fileType
+            // 
+            this.fileType.AutoSize = true;
+            this.fileType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileType.Location = new System.Drawing.Point(2, 2);
+            this.fileType.Margin = new System.Windows.Forms.Padding(0);
+            this.fileType.Name = "fileType";
+            this.fileType.Size = new System.Drawing.Size(474, 16);
+            this.fileType.TabIndex = 0;
+            this.fileType.Text = "Normal text file";
+            this.fileType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // length
+            // 
+            this.length.AutoSize = true;
+            this.length.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.length.Location = new System.Drawing.Point(481, 2);
+            this.length.Name = "length";
+            this.length.Size = new System.Drawing.Size(103, 16);
+            this.length.TabIndex = 1;
+            this.length.Text = "Length: ";
+            this.length.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lines
+            // 
+            this.lines.AutoSize = true;
+            this.lines.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lines.Location = new System.Drawing.Point(592, 2);
+            this.lines.Name = "lines";
+            this.lines.Size = new System.Drawing.Size(119, 16);
+            this.lines.TabIndex = 2;
+            this.lines.Text = "Lines: ";
+            this.lines.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // encoding
+            // 
+            this.encoding.AutoSize = true;
+            this.encoding.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.encoding.Location = new System.Drawing.Point(719, 2);
+            this.encoding.Name = "encoding";
+            this.encoding.Size = new System.Drawing.Size(169, 16);
+            this.encoding.TabIndex = 3;
+            this.encoding.Text = "UTF-8";
+            this.encoding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(686, 390);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(893, 478);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Notepad+";
@@ -464,8 +525,9 @@ namespace TextEditor
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -489,33 +551,37 @@ namespace TextEditor
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.RichTextBox rtb;
+        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сохранатьВсеToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ToolStripMenuItem сохранатьВсеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem правкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem форматToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem автосохранениеToolStripMenuItem;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem секундToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem секундToolStripMenuItem2;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem минутаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem минутToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label fileType;
+        private System.Windows.Forms.Label length;
+        private System.Windows.Forms.Label lines;
+        private System.Windows.Forms.Label encoding;
     }
 }
 
