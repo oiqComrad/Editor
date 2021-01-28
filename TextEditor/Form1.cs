@@ -13,7 +13,7 @@ namespace TextEditor
 {
     public partial class Form1 : Form
     {
-        private static Bitmap closeImage = new Bitmap(@"C:\programs\Editor\TextEditor\Resources\Close.png");
+        private static Bitmap closeImage;
         private static int currentInd = 0;
         private static RichTextBox currentRtb;
         private static string currentText = "";
@@ -28,6 +28,9 @@ namespace TextEditor
             tabControl1.Padding = new Point(12, 4);
             tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
             currentRtb = rtb;
+            Text = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\")) + "README.txt" + " - Notepad+";
+            tabControl1.SelectedTab.Name = Text;
+            closeImage = Properties.Resource.Close;
         }
         private void tabPage1_Click(object sender, EventArgs e)
         {
@@ -50,6 +53,7 @@ namespace TextEditor
             tabControl1.SelectedIndex = tabControl1.TabCount - 1;
             Text = newPage.Text + " - Notepad+";
             currentRtb = (RichTextBox)tabControl1.SelectedTab.Controls["rtb"];
+            tabControl1.SelectedTab.Name = tabControl1.SelectedTab.Text;
 
         }
 
@@ -60,6 +64,7 @@ namespace TextEditor
                 currentRtb.Text = File.ReadAllText(openFileDialog1.FileName);
                 tabControl1.SelectedTab.Text = openFileDialog1.FileName.Split('\\')[openFileDialog1.FileName.Split('\\').Length - 1];
                 Text = openFileDialog1.FileName + " - Notepad+";
+                tabControl1.SelectedTab.Name = openFileDialog1.FileName;
             }
 
         }
@@ -84,7 +89,6 @@ namespace TextEditor
             {
                 var tabRect = this.tabControl1.GetTabRect(i);
                 tabRect.Inflate(-2, -2);
-                var closeImage = new Bitmap(@"C:\programs\Editor\TextEditor\Resources\Close.png");
                 var imageRect = new Rectangle(
                     (tabRect.Right - closeImage.Width),
                     tabRect.Top + (tabRect.Height - closeImage.Height) / 2,
@@ -92,8 +96,30 @@ namespace TextEditor
                     closeImage.Height);
                 if (imageRect.Contains(e.Location))
                 {
-                    this.tabControl1.TabPages.RemoveAt(i);
-                    break;
+                    TabPage page = tabControl1.TabPages[i];
+                    if (page.Text.Contains("*"))
+                    {
+                        DialogResult result = MessageBox.Show("Сохранить файл " + page.Text.Substring(0, page.Text.Length - 1) + "?", 
+                            "Сохранение", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            tabControl1.SelectedIndex = i;
+                            SaveToolStripMenuItemClick(sender, e);
+                            tabControl1.TabPages.RemoveAt(i);
+                        }
+                        else if (result == DialogResult.No)
+                        {
+                            this.tabControl1.TabPages.RemoveAt(i);
+                            break;
+                        }
+                        else break;
+
+                    }
+                    else
+                    {
+                        this.tabControl1.TabPages.RemoveAt(i);
+                        break;
+                    }
                 }
             }
         }
@@ -102,38 +128,84 @@ namespace TextEditor
         {
             currentRtb = (RichTextBox)tabControl1.SelectedTab.Controls["rtb"];
             currentInd = tabControl1.SelectedIndex;
-            Text = tabControl1.SelectedTab.Text + " - Notepad+";
+            if (tabControl1.SelectedTab.Name.Contains(" - Notepad+"))
+                Text = tabControl1.SelectedTab.Name;
+            else
+                Text = tabControl1.SelectedTab.Name + " - Notepad+";
             currentText = currentRtb.Text;
 
         }
 
         private void RtbTextChanged(object sender, EventArgs e)
         {
-            if (currentRtb.Text != currentText && !tabControl1.SelectedTab.Text.Contains("*"))
-                tabControl1.SelectedTab.Text += "*";
-            if (currentText == currentRtb.Text && tabControl1.SelectedTab.Text.Contains("*"))
-                tabControl1.SelectedTab.Text = tabControl1.SelectedTab.Text.Substring(0, tabControl1.SelectedTab.Text.Length - 1);
+            if (!tabControl1.SelectedTab.Text.Contains("*"))
+            tabControl1.SelectedTab.Text += "*";
         }
 
         private RichTextBox CreateNewRichTextBox()
         {
             RichTextBox newBox = new RichTextBox();
             newBox.Dock = DockStyle.Fill;
-            newBox.BorderStyle = BorderStyle.FixedSingle;
+            newBox.BorderStyle = BorderStyle.None;
             newBox.Margin = new Padding(3, 3, 3, 3);
             newBox.Name = "rtb";
             newBox.TextChanged += RtbTextChanged;
+            newBox.WordWrap = false;
             return newBox;
         }
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "Normal text files (*.txt)|*.txt|Rich text files (*.rtf)|*.rtf";
-            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (tabControl1.SelectedTab.Text.Contains("new"))
+            {
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    File.WriteAllText(saveFileDialog1.FileName, currentRtb.Text);
+                    tabControl1.SelectedTab.Text = saveFileDialog1.FileName.Split('\\')[saveFileDialog1.FileName.Split('\\').Length - 1];
+                    Text = saveFileDialog1.FileName;
+                    tabControl1.SelectedTab.Name = saveFileDialog1.FileName;
+                }
+            }
+            else
+            {
+                string path = Text.Split('-')[0].Trim();
+                File.WriteAllText(path, currentRtb.Text);
+                if (tabControl1.SelectedTab.Text.Contains("*") && !tabControl1.SelectedTab.Text.Contains("new"))
+                    tabControl1.SelectedTab.Text = tabControl1.SelectedTab.Text.Substring(0, tabControl1.SelectedTab.Text.Length - 1);
+            }
+        }
+
+        private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "Normal text files (*.txt)|*.txt|Rich text files (*.rtf)|*.rtf";
+            saveFileDialog1.FilterIndex = 1;
             saveFileDialog1.RestoreDirectory = true;
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
                 File.WriteAllText(saveFileDialog1.FileName, currentRtb.Text);
+                tabControl1.SelectedTab.Text = saveFileDialog1.FileName.Split('\\')[saveFileDialog1.FileName.Split('\\').Length - 1];
+                Text = saveFileDialog1.FileName;
+                tabControl1.SelectedTab.Name = saveFileDialog1.FileName;
+            }
+        }
+
+        private void SaveAllToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            TabControl.TabPageCollection pages = tabControl1.TabPages;
+            foreach (TabPage page in pages)
+            {
+                RichTextBox tempBox = page.Controls[0] as RichTextBox;
+                if (tempBox != null)
+                {
+                    File.WriteAllText(page.Name, tempBox.Text);
+                    page.Text = page.Text.Substring(0, page.Text.Length - 1);
+                }
+            }
         }
     }
 
