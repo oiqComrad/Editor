@@ -21,6 +21,7 @@ namespace TextEditor
         {
             InitializeComponent();
             MinimumSize = new Size(420, 360);
+            timer1.Tick += Timer1Tick;
         }
 
         private void Form1Load(object sender, EventArgs e)
@@ -28,8 +29,9 @@ namespace TextEditor
             tabControl1.Padding = new Point(12, 4);
             tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
             currentRtb = rtb;
-            Text = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\")) + "README.txt" + " - Notepad+";
-            tabControl1.SelectedTab.Name = Text;
+            tabControl1.SelectedTab.Name = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\")) 
+                + "README.txt" + " - Notepad+";
+            Text = tabControl1.SelectedTab.Name + " - Notepad+";
             closeImage = Properties.Resource.Close;
         }
         private void tabPage1_Click(object sender, EventArgs e)
@@ -61,6 +63,16 @@ namespace TextEditor
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                TabControl.TabPageCollection pages = tabControl1.TabPages;
+                foreach (TabPage page in pages)
+                {
+                    if (page.Name == openFileDialog1.FileName)
+                    {
+                        tabControl1.SelectedTab = page;
+                        return;
+                    }
+                }
+                NewToolStripMenuItemClick(sender, e);
                 currentRtb.Text = File.ReadAllText(openFileDialog1.FileName);
                 tabControl1.SelectedTab.Text = openFileDialog1.FileName.Split('\\')[openFileDialog1.FileName.Split('\\').Length - 1];
                 Text = openFileDialog1.FileName + " - Notepad+";
@@ -99,7 +111,7 @@ namespace TextEditor
                     TabPage page = tabControl1.TabPages[i];
                     if (page.Text.Contains("*"))
                     {
-                        DialogResult result = MessageBox.Show("Сохранить файл " + page.Text.Substring(0, page.Text.Length - 1) + "?", 
+                        DialogResult result = MessageBox.Show("Сохранить файл " + page.Text.Substring(0, page.Text.Length - 1) + "?",
                             "Сохранение", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                         if (result == DialogResult.Yes)
                         {
@@ -143,7 +155,7 @@ namespace TextEditor
             if (!tabControl1.SelectedTab.Text.Contains("*"))
                 tabControl1.SelectedTab.Text += "*";
             length.Text = "Length: " + currentRtb.Text.Length.ToString();
-            lines.Text =  "Lines: " + currentRtb.Text.Count(c => c == '\n').ToString();
+            lines.Text = "Lines: " + currentRtb.Text.Count(c => c == '\n').ToString();
         }
 
         private RichTextBox CreateNewRichTextBox()
@@ -164,7 +176,7 @@ namespace TextEditor
             saveFileDialog1.FilterIndex = 1;
             saveFileDialog1.RestoreDirectory = true;
 
-            if (tabControl1.SelectedTab.Text.Contains("new"))
+            if (!tabControl1.SelectedTab.Text.Contains("txt") && !tabControl1.SelectedTab.Text.Contains("rtf"))
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -204,11 +216,16 @@ namespace TextEditor
             foreach (TabPage page in pages)
             {
                 RichTextBox tempBox = page.Controls[0] as RichTextBox;
-                if (tempBox != null)
+                if (!page.Text.Contains("txt") && !page.Text.Contains("rtf"))
+                    SaveNewFile(page, tempBox.Text);
+                else
                 {
-                    File.WriteAllText(page.Name, tempBox.Text);
-                    if (page.Text.Contains("*"))
-                        page.Text = page.Text.Substring(0, page.Text.Length - 1);
+                    if (tempBox != null)
+                    {
+                        File.WriteAllText(page.Name, tempBox.Text);
+                        if (page.Text.Contains("*"))
+                            page.Text = page.Text.Substring(0, page.Text.Length - 1);
+                    }
                 }
             }
         }
@@ -216,30 +233,58 @@ namespace TextEditor
         private void FifteenSecToolStripMenuItemClick(object sender, EventArgs e)
         {
             timer1.Interval = 15000;
+            timer1.Start();
         }
 
 
         private void FourtySecToolStripMenuItem2Click(object sender, EventArgs e)
         {
             timer1.Interval = 45000;
+            timer1.Start();
         }
 
         private void MinToolStripMenuItemClick(object sender, EventArgs e)
         {
             timer1.Interval = 60000;
+            timer1.Start();
         }
 
         private void FiveMinToolStripMenuItemClick(object sender, EventArgs e)
         {
             timer1.Interval = 300000;
+            timer1.Start();
         }
 
         private void Timer1Tick(object sender, EventArgs e)
         {
-            SaveAllToolStripMenuItemClick(sender, e);
+            bool flag = true;
+            TabControl.TabPageCollection pages = tabControl1.TabPages;
+            foreach (TabPage page in pages)
+            {
+                if (!page.Text.Contains("txt") && !page.Text.Contains("txt"))
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+                SaveAllToolStripMenuItemClick(sender, e);
         }
 
-      
+        private void SaveNewFile(TabPage page, string text)
+        {
+            saveFileDialog1.Filter = "Normal text files (*.txt)|*.txt|Rich text files (*.rtf)|*.rtf";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(saveFileDialog1.FileName, text);
+                page.Text = saveFileDialog1.FileName.Split('\\')[saveFileDialog1.FileName.Split('\\').Length - 1];
+                page.Name = saveFileDialog1.FileName;
+
+            }
+        }
     }
 
 
