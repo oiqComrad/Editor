@@ -155,7 +155,7 @@ namespace TextEditor
             if (!tabControl1.SelectedTab.Text.Contains("*"))
                 tabControl1.SelectedTab.Text += "*";
             length.Text = "Length: " + currentRtb.Text.Length.ToString();
-            lines.Text = "Lines: " + currentRtb.Text.Count(c => c == '\n').ToString();
+            lines.Text = "Lines: " + (currentRtb.Text.Count(c => c == '\n') + 1).ToString();
         }
 
         private RichTextBox CreateNewRichTextBox()
