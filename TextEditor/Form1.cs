@@ -133,6 +133,8 @@ namespace TextEditor
             else
                 Text = tabControl1.SelectedTab.Name + " - Notepad+";
             currentText = currentRtb.Text;
+            length.Text = "Length: " + currentRtb.Text.Length.ToString();
+            lines.Text = "Lines: " + currentRtb.Text.Count(c => c == '\n').ToString();
 
         }
 

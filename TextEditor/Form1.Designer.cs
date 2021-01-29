@@ -447,10 +447,10 @@ namespace TextEditor
             // 
             this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.76494F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.34615F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.23586F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.65305F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.Controls.Add(this.fileType, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.length, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.lines, 2, 0);
@@ -471,7 +471,7 @@ namespace TextEditor
             this.fileType.Location = new System.Drawing.Point(2, 2);
             this.fileType.Margin = new System.Windows.Forms.Padding(0);
             this.fileType.Name = "fileType";
-            this.fileType.Size = new System.Drawing.Size(474, 16);
+            this.fileType.Size = new System.Drawing.Size(353, 16);
             this.fileType.TabIndex = 0;
             this.fileType.Text = "Normal text file";
             this.fileType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -480,9 +480,9 @@ namespace TextEditor
             // 
             this.length.AutoSize = true;
             this.length.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.length.Location = new System.Drawing.Point(481, 2);
+            this.length.Location = new System.Drawing.Point(360, 2);
             this.length.Name = "length";
-            this.length.Size = new System.Drawing.Size(103, 16);
+            this.length.Size = new System.Drawing.Size(170, 16);
             this.length.TabIndex = 1;
             this.length.Text = "Length: ";
             this.length.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -491,9 +491,9 @@ namespace TextEditor
             // 
             this.lines.AutoSize = true;
             this.lines.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lines.Location = new System.Drawing.Point(592, 2);
+            this.lines.Location = new System.Drawing.Point(538, 2);
             this.lines.Name = "lines";
-            this.lines.Size = new System.Drawing.Size(119, 16);
+            this.lines.Size = new System.Drawing.Size(170, 16);
             this.lines.TabIndex = 2;
             this.lines.Text = "Lines: ";
             this.lines.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -502,9 +502,9 @@ namespace TextEditor
             // 
             this.encoding.AutoSize = true;
             this.encoding.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.encoding.Location = new System.Drawing.Point(719, 2);
+            this.encoding.Location = new System.Drawing.Point(716, 2);
             this.encoding.Name = "encoding";
-            this.encoding.Size = new System.Drawing.Size(169, 16);
+            this.encoding.Size = new System.Drawing.Size(172, 16);
             this.encoding.TabIndex = 3;
             this.encoding.Text = "UTF-8";
             this.encoding.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
