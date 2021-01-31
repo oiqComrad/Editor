@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace TextEditor
 {
@@ -22,6 +17,17 @@ namespace TextEditor
             InitializeComponent();
             MinimumSize = new Size(420, 360);
             timer1.Tick += Timer1Tick;
+            toolStripButton1.Image = Properties.Resource.Bold;
+            toolStripButton2.Image = Properties.Resource.Italic_Image;
+            toolStripButton3.Image = Properties.Resource.underline_Image;
+            toolStripButton4.Image = Properties.Resource.strikethrough;
+            newToolStripMenuItem.Image = Properties.Resource.new_Image;
+            openToolStripMenuItem.Image = Properties.Resource.open_Image;
+            saveToolStripMenuItem.Image = Properties.Resource.save_Image;
+            newToolStripButton.Image = Properties.Resource.new_Image;
+            openToolStripButton.Image = Properties.Resource.open_Image;
+            saveToolStripButton.Image = Properties.Resource.save_Image;
+            closeImage = Properties.Resource.Close;
         }
 
         private void Form1Load(object sender, EventArgs e)
@@ -29,10 +35,9 @@ namespace TextEditor
             tabControl1.Padding = new Point(12, 4);
             tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
             currentRtb = rtb;
-            tabControl1.SelectedTab.Name = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\")) 
+            tabControl1.SelectedTab.Name = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\"))
                 + "README.txt" + " - Notepad+";
             Text = tabControl1.SelectedTab.Name + " - Notepad+";
-            closeImage = Properties.Resource.Close;
         }
         private void tabPage1_Click(object sender, EventArgs e)
         {
@@ -166,6 +171,8 @@ namespace TextEditor
             newBox.Margin = new Padding(3, 3, 3, 3);
             newBox.Name = "rtb";
             newBox.TextChanged += RtbTextChanged;
+            newBox.SelectionChanged += RtbSelectionChanged;
+            newBox.ZoomFactor = 1.3f;
             newBox.WordWrap = false;
             return newBox;
         }
@@ -285,9 +292,113 @@ namespace TextEditor
 
             }
         }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void NewToolStripButtonClick(object sender, EventArgs e)
+        {
+            NewToolStripMenuItemClick(sender, e);
+        }
+
+        private void ToolStripButton1Click(object sender, EventArgs e)
+        {
+            if (toolStripButton1.Checked == false)  toolStripButton1.Checked = true;
+            else  toolStripButton1.Checked = false;
+
+            if (currentRtb.SelectionFont == null) return;
+
+            FontStyle style = currentRtb.SelectionFont.Style;
+            if (currentRtb.SelectionFont.Bold)
+            {
+                style &= ~FontStyle.Bold;
+            }
+            else
+            {
+                style |= FontStyle.Bold;
+
+            }
+            currentRtb.SelectionFont = new Font(currentRtb.SelectionFont, style);
+        }
+
+        private void RtbSelectionChanged(object sender, EventArgs e)
+        {
+            if (rtb.SelectionFont != null)
+            {
+                toolStripButton1.Checked = currentRtb.SelectionFont.Bold;
+                toolStripButton2.Checked = currentRtb.SelectionFont.Italic;
+                toolStripButton3.Checked = currentRtb.SelectionFont.Underline;
+                toolStripButton4.Checked = currentRtb.SelectionFont.Strikeout;
+            }
+        }
+
+        private void ToolStripButton2Click(object sender, EventArgs e)
+        {
+            if (toolStripButton2.Checked == false) toolStripButton2.Checked = true;
+            else toolStripButton2.Checked = false;
+
+            if (currentRtb.SelectionFont == null) return;
+
+            FontStyle style = currentRtb.SelectionFont.Style;
+            if (currentRtb.SelectionFont.Italic)
+            {
+                style &= ~FontStyle.Italic;
+            }
+            else
+            {
+                style |= FontStyle.Italic;
+
+            }
+            currentRtb.SelectionFont = new Font(currentRtb.SelectionFont, style);
+        }
+
+        private void ToolStripButton3Click(object sender, EventArgs e)
+        {
+            if (toolStripButton3.Checked == false) toolStripButton3.Checked = true;
+            else toolStripButton3.Checked = false;
+
+            if (currentRtb.SelectionFont == null) return;
+
+            FontStyle style = currentRtb.SelectionFont.Style;
+            if (currentRtb.SelectionFont.Underline)
+            {
+                style &= ~FontStyle.Underline;
+            }
+            else
+            {
+                style |= FontStyle.Underline;
+
+            }
+            currentRtb.SelectionFont = new Font(currentRtb.SelectionFont, style);
+        }
+
+        private void ToolStripButton4Click(object sender, EventArgs e)
+        {
+            if (toolStripButton4.Checked == false) toolStripButton4.Checked = true;
+            else toolStripButton4.Checked = false;
+
+            if (currentRtb.SelectionFont == null) return;
+
+            FontStyle style = currentRtb.SelectionFont.Style;
+            if (currentRtb.SelectionFont.Strikeout)
+            {
+                style &= ~FontStyle.Strikeout;
+            }
+            else
+            {
+                style |= FontStyle.Strikeout;
+
+            }
+            currentRtb.SelectionFont = new Font(currentRtb.SelectionFont, style);
+        }
+
+        private void ExitToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
-
-
-
 }
+
 
