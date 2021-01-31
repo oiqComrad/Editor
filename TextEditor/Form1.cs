@@ -256,6 +256,7 @@ namespace TextEditor
             timer1.Start();
         }
 
+
         private void FiveMinToolStripMenuItemClick(object sender, EventArgs e)
         {
             timer1.Interval = 300000;
