@@ -582,6 +582,12 @@ namespace TextEditor
             currentRtb.SelectionFont = new Font(currentRtb.SelectionFont, style);
         }
 
+        /// <summary>
+        /// Метод вызывается при нажатии кнопки закрытия формы.
+        /// Перед закрытием пользователю предлагается сохранить все файлы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitToolStripMenuItemClick(object sender, EventArgs e)
         {
             TabControl.TabPageCollection pages = tabControl1.TabPages;
@@ -608,6 +614,11 @@ namespace TextEditor
             Application.Exit();
         }
 
+        /// <summary>
+        /// Изменение шрифта в боксе.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FontToolStripMenuItemClick(object sender, EventArgs e)
         {
             try
@@ -634,6 +645,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        /// Измение шрифта в каждом компоненте бокса.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FontApply(object sender, EventArgs e)
         {
             fontDialog1.FontMustExist = true;
@@ -647,6 +663,11 @@ namespace TextEditor
             }
         }
 
+        /// <summary>
+        ///  Вызов контекстного меню.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RtbMouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -676,6 +697,13 @@ namespace TextEditor
             currentRtb.Paste();
         }
 
+        /// <summary>
+        /// Вызов метода при нажатии на кнопку закрытия на форме.
+        /// Почему-то я не смог связать этот метод с событием из другого.
+        /// Поэтому пришлось два раза прописывать метод закрытия формы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1FormClosing(object sender, FormClosingEventArgs e)
         {
             TabControl.TabPageCollection pages = tabControl1.TabPages;
@@ -701,19 +729,31 @@ namespace TextEditor
             }
             Application.Exit();
         }
-
+        /// <summary>
+        /// Изменение темы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LightToolStripMenuItemClick(object sender, EventArgs e)
         {
             currentRtb.BackColor = Color.White;
             currentRtb.ForeColor = Color.Black;
         }
-
+        /// <summary>
+        /// Изменение темы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DarkToolStripMenuItemClick(object sender, EventArgs e)
         {
             currentRtb.BackColor = Color.FromArgb(28, 28, 28);
             currentRtb.ForeColor = Color.White;
         }
-
+        /// <summary>
+        /// Изменение темы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BlueToolStripMenuItemClick(object sender, EventArgs e)
         {
             currentRtb.BackColor = Color.FromArgb(217, 247, 239);
